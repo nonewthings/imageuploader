@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Image Uploader</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Image Uploader</h1>
+        </header>
+
+        <form id="uploadForm">
+            <div class="form-group">
+                <label for="provider">Provider</label>
+                <select id="provider" name="provider">
+                    <option value="catbox">catbox</option>
+                    <option value="sxcu">sxcu</option>
+                    <option value="imgchest" selected>imgchest</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="files">Files</label>
+                <div class="file-upload-area" id="dropZone">
+                    <input type="file" id="files" name="files" multiple accept="image/*,video/webm">
+                    <div class="upload-prompt">
+                        <span class="icon">📁</span>
+                        <p>Drag and drop files here or click to browse</p>
+                        <p class="hint" id="fileTypesHint">Supported: PNG, GIF, JPEG, JPG, ICO, BMP, TIFF, WEBM, WEBP</p>
+                    </div>
+                </div>
+                <div id="fileList" class="file-list"></div>
+            </div>
+
+            <div class="form-group" id="urlGroup">
+                <label for="urls">URLs (comma-separated)</label>
+                <input type="text" id="urls" name="urls" placeholder="https://example.com/image.jpg, https://example.com/image2.png">
+            </div>
+
+            <div class="form-group">
+                <label for="title">Title</label>
+                <input type="text" id="title" name="title" placeholder="Optional title">
+            </div>
+
+            <div class="form-group">
+                <label for="description">Description</label>
+                <input type="text" id="description" name="description" placeholder="Optional description">
+            </div>
+
+            <div class="form-group checkbox-group" id="createCollectionGroup">
+                <label class="checkbox-label">
+                    <input type="checkbox" id="createCollection" name="createCollection" checked>
+                    <span class="checkmark"></span>
+                    Create Collection
+                </label>
+            </div>
+
+            <div id="sxcuOptions" class="hidden">
+                <div class="form-group checkbox-group">
+                    <label class="checkbox-label">
+                        <input type="checkbox" id="sxcuPrivate" name="sxcuPrivate" checked>
+                        <span class="checkmark"></span>
+                        Private Collection
+                    </label>
+                </div>
+            </div>
+
+            <div class="form-group checkbox-group" id="anonymousGroup">
+                <label class="checkbox-label">
+                    <input type="checkbox" id="anonymous" name="anonymous" checked>
+                    <span class="checkmark"></span>
+                    Anonymous
+                </label>
+            </div>
+
+            <div class="form-group hidden" id="imgchestApiKeyGroup">
+                <label for="imgchestApiKey">ImgChest API Token (optional)</label>
+                <div class="api-key-input-wrapper">
+                    <input type="password" id="imgchestApiKey" name="imgchestApiKey" placeholder="Your personal access token">
+                    <button type="button" id="toggleApiKeyVisibility" class="toggle-visibility-btn" title="Toggle visibility">👁</button>
+                </div>
+                <p class="hint">Leave empty to use default. <a href="https://imgchest.com/docs/api/1.0/general/authorization" target="_blank">Get your token</a></p>
+            </div>
+
+            <div class="form-group checkbox-group hidden" id="createAlbumGroup">
+                <label class="checkbox-label">
+                    <input type="checkbox" id="createAlbum" name="createAlbum" checked>
+                    <span class="checkmark"></span>
+                    Create Album
+                </label>
+            </div>
+
+            <div class="form-group" id="postIdGroup">
+                <label for="postId">Post ID (to add to existing)</label>
+                <input type="text" id="postId" name="postId" placeholder="e.g., xxxxxxxx">
+            </div>
+
+            <button type="submit" id="uploadBtn" class="btn btn-primary">
+                <span class="btn-text">Upload</span>
+                <span class="btn-loading" style="display: none;">Uploading...</span>
+            </button>
+        </form>
+
+        <div id="results" class="results" style="display: none;">
+            <h2>Results</h2>
+            <div id="resultsContent"></div>
+        </div>
+
+        <div id="progress" class="progress" style="display: none;">
+            <div class="progress-bar">
+                <div class="progress-fill" id="progressFill"></div>
+            </div>
+            <p id="progressText">Uploading...</p>
+        </div>
+    </div>
+
+    <script src="dist/config.js"></script>
+    <script src="dist/app.js"></script>
+</body>
+</html>

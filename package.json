@@ -1,0 +1,26 @@
+{
+  "name": "image-uploader",
+  "version": "1.0.0",
+  "description": "Image uploader with multiple provider support",
+  "type": "module",
+  "main": "dist/server.js",
+  "scripts": {
+    "build": "bun run build:config:prod && bun run build:app && bun run build:server && bun run build:worker",
+    "build:dev": "bun run build:config:dev && bun run build:app && bun run build:server",
+    "build:config:dev": "bun build src/config.dev.ts --outfile=dist/config.js --target=browser",
+    "build:config:prod": "bun build src/config.prod.ts --outfile=dist/config.js --target=browser",
+    "build:app": "bun build src/app.ts --outfile=dist/app.js --target=browser --minify",
+    "build:server": "bun build src/server.ts --outfile=dist/server.js --target=bun",
+    "build:worker": "bun build src/worker.ts --outfile=dist/worker.js --target=browser",
+    "dev": "bun run build:dev && bun run dist/server.js",
+    "typecheck": "bun x tsc --noEmit",
+    "test": "bun test tests/*.ts",
+    "deploy": "bun run build && wrangler deploy"
+  },
+  "dependencies": {},
+  "devDependencies": {
+    "typescript": "^5.3.0",
+    "bun-types": "^1.0.0",
+    "@cloudflare/workers-types": "^4.20240117.0"
+  }
+}
