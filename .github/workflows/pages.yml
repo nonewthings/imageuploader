@@ -28,20 +28,25 @@ jobs:
           bun-version: latest
 
       - name: Install dependencies
-        working-directory: ./web
         run: bun install
 
       - name: Build project
-        working-directory: ./web
         run: bun run build:config:prod && bun run build:app
 
       - name: Setup Pages
         uses: actions/configure-pages@v4
 
+      - name: Prepare upload
+        run: |
+          mkdir -p deploy
+          cp index.html deploy/
+          cp styles.css deploy/
+          cp -r dist deploy/
+
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: ./web
+          path: deploy
 
   deploy:
     environment:
